@@ -1,9 +1,26 @@
 /* Páginas legales de Jouniver — gelveta.com/jouniver/
    Colores del tema de Jouniver (claude_tema-jouniver.md). */
 :root {
+  /* Modo oscuro por defecto, con tonos tipo GitHub */
   --forest: #3F7A2C;
-  --forest-deep: #24501A;
+  --forest-deep: #1E4316;
   --gold: #E0A83E;
+  --gold-text: #E0A83E;
+  --bg: #0D1117;
+  --text: #E6EDF3;
+  --muted: #8B949E;
+  --rule: #30363D;
+  --soft: #161B22;
+  --link: #8FCB6B;
+  --header-text: #FFFFFF;
+  color-scheme: dark;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+/* Modo claro, solo si la persona lo elige con el botón */
+:root[data-theme="light"] {
+  --forest-deep: #24501A;
   --gold-text: #7A5410;
   --bg: #FFFFFF;
   --text: #1C1F1A;
@@ -11,21 +28,7 @@
   --rule: #E3E5DF;
   --soft: #F2F5EF;
   --link: #2F6522;
-  --header-text: #FFFFFF;
-  box-sizing: border-box;
-  padding-top: env(safe-area-inset-top, 0px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #121410;
-    --text: #E3E3DC;
-    --muted: #A5AB9F;
-    --rule: #2C3029;
-    --soft: #1A1D17;
-    --link: #8FCB6B;
-    --gold-text: #E0A83E;
-  }
+  color-scheme: light;
 }
 *, *::before, *::after { box-sizing: inherit; }
 html { scroll-padding-top: 1.5rem; -webkit-text-size-adjust: 100%; }
@@ -74,12 +77,25 @@ body {
 /* Navegación entre las tres páginas */
 .paginas {
   border-bottom: 1px solid var(--rule);
-  overflow-x: auto;
+}
+.paginas-interior {
+  display: flex; align-items: center; gap: 1rem;
+  margin: 0 auto; padding: 0 1.25rem; max-width: 68rem;
 }
 .paginas ul {
   display: flex; gap: 1.5rem; list-style: none;
-  margin: 0 auto; padding: 0 1.25rem; max-width: 68rem;
+  margin: 0; padding: 0; flex: 1; min-width: 0;
+  overflow-x: auto; scrollbar-width: none;
 }
+.paginas ul::-webkit-scrollbar { display: none; }
+.tema {
+  flex: none; display: inline-flex; align-items: center; gap: .4rem;
+  background: var(--soft); color: var(--text);
+  border: 1px solid var(--rule); border-radius: 2rem;
+  padding: .35rem .8rem; font: inherit; font-size: .85rem; font-weight: 600;
+  cursor: pointer;
+}
+.tema:hover { border-color: var(--muted); }
 .paginas a {
   display: block; padding: .9rem 0; white-space: nowrap;
   color: var(--muted); text-decoration: none; font-size: .95rem; font-weight: 600;
@@ -166,4 +182,16 @@ tr:last-child td { border-bottom: 0; }
   .cabecera::after, .paginas, .indice { display: none; }
   .app, .vigencia { color: #000; }
   .cuerpo { display: block; padding: 0; }
+}
+
+/* Celular: pestañas compactas y botón de tema solo con ícono */
+@media (max-width: 30rem) {
+  .paginas-interior { gap: .5rem; padding: 0 1rem; }
+  .paginas ul { gap: .9rem; justify-content: space-between; }
+  .paginas a { font-size: .85rem; letter-spacing: -0.01em; }
+  .tema {
+    position: absolute; top: calc(env(safe-area-inset-top, 0px) + 1.9rem); right: 1rem;
+    padding: .4rem .55rem; background: rgba(0,0,0,.25); border-color: rgba(255,255,255,.25); color: #FFFFFF;
+  }
+  .tema-texto { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 }

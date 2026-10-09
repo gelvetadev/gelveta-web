@@ -8,6 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    try { if (localStorage.getItem('tema') === 'light') document.documentElement.dataset.theme = 'light'; } catch (e) {}
+  </script>
   <link rel="stylesheet" href="../legal.css">
 </head>
 <body>
@@ -21,11 +24,14 @@
 </header>
 
 <nav class="paginas" aria-label="Documentos legales de Jouniver">
+  <div class="paginas-interior">
   <ul>
     <li><a href="../privacidad/">Privacidad</a></li>
-    <li><a href="../terminos/">Términos y condiciones</a></li>
-    <li><a href="../eliminar-cuenta/" aria-current="page">Eliminar tu cuenta</a></li>
+    <li><a href="../terminos/">Términos</a></li>
+    <li><a href="../eliminar-cuenta/" aria-current="page">Eliminar cuenta</a></li>
   </ul>
+    <button class="tema" type="button" id="tema" aria-label="Cambiar entre modo oscuro y claro"></button>
+  </div>
 </nav>
 
 <main class="cuerpo">
@@ -90,5 +96,21 @@
   </div>
 </footer>
 
+<script>
+  (function () {
+    var root = document.documentElement, boton = document.getElementById('tema');
+    function pintar() {
+      var claro = root.dataset.theme === 'light';
+      boton.innerHTML = claro ? '<span aria-hidden="true">🌙</span><span class="tema-texto">Oscuro</span>' : '<span aria-hidden="true">☀️</span><span class="tema-texto">Claro</span>';
+      boton.setAttribute('aria-pressed', claro ? 'true' : 'false');
+    }
+    boton.addEventListener('click', function () {
+      if (root.dataset.theme === 'light') { delete root.dataset.theme; } else { root.dataset.theme = 'light'; }
+      try { localStorage.setItem('tema', root.dataset.theme === 'light' ? 'light' : 'dark'); } catch (e) {}
+      pintar();
+    });
+    pintar();
+  })();
+</script>
 </body>
 </html>
